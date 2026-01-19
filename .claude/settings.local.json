@@ -3,7 +3,11 @@
     "allow": [
       "Bash(npm create:*)",
       "Bash(npm install)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd Quarkus backend service with H2 database\n\n- REST API for table entries \\(CRUD operations\\)\n- Controller/Service/Repository architecture\n- H2 in-memory database with Hibernate ORM Panache\n- CORS configured for frontend integration\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(dir:*)",
+      "Bash(git push:*)"
     ]
   }
 }
