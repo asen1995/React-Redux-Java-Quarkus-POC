@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { TableEntry } from '../types/TableEntry';
+import type { TableEntry } from '../types/TableEntry';
 import { entriesApi } from '../api/entriesApi';
 
 interface EntriesState {

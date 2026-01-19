@@ -7,8 +7,8 @@ import {
   Select,
   FormControl,
   InputLabel,
-  SelectChangeEvent,
 } from '@mui/material';
+import type { SelectChangeEvent } from '@mui/material';
 import { useAppDispatch } from '../store/hooks';
 import { addEntry } from '../store/entriesSlice';
 

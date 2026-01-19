@@ -7,7 +7,22 @@
       "Bash(git add:*)",
       "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd Quarkus backend service with H2 database\n\n- REST API for table entries \\(CRUD operations\\)\n- Controller/Service/Repository architecture\n- H2 in-memory database with Hibernate ORM Panache\n- CORS configured for frontend integration\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
       "Bash(dir:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(./mvnw quarkus:dev:*)",
+      "Bash(npm run dev:*)",
+      "Bash(mvn --version:*)",
+      "Bash(where:*)",
+      "Bash(java:*)",
+      "Bash(choco:*)",
+      "Bash(winget:*)",
+      "Bash(export JAVA_HOME=\"/c/Program Files/Microsoft/jdk-21.0.9.10-hotspot\")",
+      "Bash(export PATH=\"$JAVA_HOME/bin:$PATH\")",
+      "Bash(mvn quarkus:dev:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run build:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill //F //PID 31408)"
     ]
   }
 }

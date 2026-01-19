@@ -1,4 +1,4 @@
-import { TableEntry } from '../types/TableEntry';
+import type { TableEntry } from '../types/TableEntry';
 
 const API_URL = 'http://localhost:8080/api/entries';
 
