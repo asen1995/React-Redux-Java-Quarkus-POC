@@ -1,0 +1,2 @@
+### Get entry by ID (replace 1 with actual ID)
+GET {{baseUrl}}/api/entries/1

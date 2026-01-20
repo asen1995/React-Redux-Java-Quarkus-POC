@@ -1,0 +1,32 @@
+### Get all entries (default: page 0, size 10, sorted by createdAt desc)
+GET {{baseUrl}}/api/entries
+
+###
+
+### Get entries with pagination
+GET {{baseUrl}}/api/entries?page=0&size=5
+
+###
+
+### Get entries with custom page size
+GET {{baseUrl}}/api/entries?page=0&size=20
+
+###
+
+### Get entries sorted by number ascending
+GET {{baseUrl}}/api/entries?sortBy=numberValue&sortDirection=asc
+
+###
+
+### Get entries sorted by selector descending
+GET {{baseUrl}}/api/entries?sortBy=selectorValue&sortDirection=desc
+
+###
+
+### Get entries sorted by free text ascending
+GET {{baseUrl}}/api/entries?sortBy=freeText&sortDirection=asc
+
+###
+
+### Get entries with all parameters
+GET {{baseUrl}}/api/entries?page=0&size=10&sortBy=createdAt&sortDirection=desc

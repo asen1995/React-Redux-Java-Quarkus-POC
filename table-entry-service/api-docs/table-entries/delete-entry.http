@@ -1,0 +1,2 @@
+### Delete entry by ID (replace 1 with actual ID)
+DELETE {{baseUrl}}/api/entries/1

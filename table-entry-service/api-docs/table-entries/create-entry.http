@@ -1,0 +1,9 @@
+### Create a new entry
+POST {{baseUrl}}/api/entries
+Content-Type: application/json
+
+{
+  "numberValue": 42,
+  "selectorValue": "Option A",
+  "freeText": "This is a sample entry"
+}

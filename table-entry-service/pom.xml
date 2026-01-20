@@ -13,6 +13,7 @@
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <quarkus.platform.version>3.17.5</quarkus.platform.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
     </properties>
 
     <dependencyManagement>
@@ -38,6 +39,12 @@
             <artifactId>quarkus-rest-jackson</artifactId>
         </dependency>
 
+        <!-- Config -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-config-yaml</artifactId>
+        </dependency>
+
         <!-- Database -->
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -46,6 +53,13 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-h2</artifactId>
+        </dependency>
+
+        <!-- Mapping -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
         </dependency>
 
         <!-- Testing -->
@@ -74,7 +88,6 @@
                             <goal>build</goal>
                             <goal>generate-code</goal>
                             <goal>generate-code-tests</goal>
-                            <goal>native-sources</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -85,6 +98,16 @@
                 <version>3.13.0</version>
                 <configuration>
                     <release>${maven.compiler.release}</release>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    <compilerArgs>
+                        <arg>-Amapstruct.defaultComponentModel=cdi</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>

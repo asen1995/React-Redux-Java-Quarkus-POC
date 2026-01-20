@@ -9,7 +9,7 @@ function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchEntries());
+    dispatch(fetchEntries({ page: 0, size: 10, sortBy: 'createdAt', sortDirection: 'desc' }));
   }, [dispatch]);
 
   return (
