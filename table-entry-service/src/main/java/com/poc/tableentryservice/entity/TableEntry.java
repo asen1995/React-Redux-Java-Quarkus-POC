@@ -1,9 +1,11 @@
 package com.poc.tableentryservice.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 /**
  * Entity representing a table entry with three fields:
@@ -30,6 +32,20 @@ public class TableEntry extends PanacheEntity {
      */
     @Column(name = "free_text", nullable = false)
     public String freeText;
+
+    /**
+     * Timestamp when the entry was created.
+     */
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    public LocalDateTime createdAt;
+
+    /**
+     * Timestamp when the entry was last updated.
+     */
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    public LocalDateTime updatedAt;
 
     /**
      * Default constructor required by JPA.

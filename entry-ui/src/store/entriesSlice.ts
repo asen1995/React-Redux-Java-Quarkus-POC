@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { TableEntry } from '../types/TableEntry';
+import type { TableEntry, CreateTableEntry } from '../types/TableEntry';
 import { entriesApi } from '../api/entriesApi';
 
 interface EntriesState {
@@ -20,7 +20,7 @@ export const fetchEntries = createAsyncThunk('entries/fetchAll', async () => {
 
 export const addEntry = createAsyncThunk(
   'entries/add',
-  async (entry: Omit<TableEntry, 'id'>) => {
+  async (entry: CreateTableEntry) => {
     return entriesApi.create(entry);
   }
 );

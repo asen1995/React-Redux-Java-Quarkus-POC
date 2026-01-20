@@ -1,4 +1,4 @@
-import type { TableEntry } from '../types/TableEntry';
+import type { TableEntry, CreateTableEntry } from '../types/TableEntry';
 
 const API_URL = 'http://localhost:8080/api/entries';
 
@@ -8,7 +8,7 @@ export const entriesApi = {
     return response.json();
   },
 
-  async create(entry: Omit<TableEntry, 'id'>): Promise<TableEntry> {
+  async create(entry: CreateTableEntry): Promise<TableEntry> {
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
