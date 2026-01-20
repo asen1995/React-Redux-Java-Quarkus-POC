@@ -73,13 +73,35 @@ public class TableEntryServiceImpl implements TableEntryService {
 
     @Override
     @Transactional
-    public TableEntryDto update(Long id, CreateTableEntryDto dto) {
+    public TableEntryDto replace(Long id, CreateTableEntryDto dto) {
         TableEntry existing = repository.findById(id);
         if (existing == null) {
-            LOG.warnf("Cannot update - entry not found with id: %d", id);
+            LOG.warnf("Cannot replace - entry not found with id: %d", id);
             throw new EntryNotFoundException(id);
         }
-        mapper.updateEntity(dto, existing);
+        existing.numberValue = dto.numberValue();
+        existing.selectorValue = dto.selectorValue();
+        existing.freeText = dto.freeText();
+        return mapper.toDto(existing);
+    }
+
+    @Override
+    @Transactional
+    public TableEntryDto patch(Long id, CreateTableEntryDto dto) {
+        TableEntry existing = repository.findById(id);
+        if (existing == null) {
+            LOG.warnf("Cannot patch - entry not found with id: %d", id);
+            throw new EntryNotFoundException(id);
+        }
+        if (dto.numberValue() != null) {
+            existing.numberValue = dto.numberValue();
+        }
+        if (dto.selectorValue() != null) {
+            existing.selectorValue = dto.selectorValue();
+        }
+        if (dto.freeText() != null) {
+            existing.freeText = dto.freeText();
+        }
         return mapper.toDto(existing);
     }
 

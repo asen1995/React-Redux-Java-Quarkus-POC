@@ -40,14 +40,24 @@ public interface TableEntryService {
     TableEntryDto create(CreateTableEntryDto dto);
 
     /**
-     * Updates an existing table entry.
+     * Replaces an existing table entry entirely.
+     *
+     * @param id  the ID of the entry to replace
+     * @param dto the new entry data (all fields required)
+     * @return the replaced entry DTO
+     * @throws EntryNotFoundException if the entry is not found
+     */
+    TableEntryDto replace(Long id, CreateTableEntryDto dto);
+
+    /**
+     * Partially updates an existing table entry.
      *
      * @param id  the ID of the entry to update
-     * @param dto the new entry data
+     * @param dto the fields to update (null fields are ignored)
      * @return the updated entry DTO
      * @throws EntryNotFoundException if the entry is not found
      */
-    TableEntryDto update(Long id, CreateTableEntryDto dto);
+    TableEntryDto patch(Long id, CreateTableEntryDto dto);
 
     /**
      * Deletes a table entry by its ID.

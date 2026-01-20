@@ -139,22 +139,43 @@ class TableEntryServiceImplTest {
     }
 
     @Test
-    void update_whenFound_updatesAndReturnsDto() {
+    void replace_whenFound_replacesAndReturnsDto() {
         when(repository.findById(1L)).thenReturn(sampleEntity);
         when(mapper.toDto(sampleEntity)).thenReturn(sampleDto);
 
-        TableEntryDto result = service.update(1L, createDto);
+        TableEntryDto result = service.replace(1L, createDto);
 
         assertEquals(sampleDto, result);
-        verify(mapper).updateEntity(createDto, sampleEntity);
+        assertEquals(createDto.numberValue(), sampleEntity.numberValue);
+        assertEquals(createDto.selectorValue(), sampleEntity.selectorValue);
+        assertEquals(createDto.freeText(), sampleEntity.freeText);
     }
 
     @Test
-    void update_whenNotFound_throwsException() {
+    void replace_whenNotFound_throwsException() {
         when(repository.findById(999L)).thenReturn(null);
 
-        assertThrows(EntryNotFoundException.class, () -> service.update(999L, createDto));
-        verify(mapper, never()).updateEntity(any(), any());
+        assertThrows(EntryNotFoundException.class, () -> service.replace(999L, createDto));
+    }
+
+    @Test
+    void patch_whenFound_updatesOnlyProvidedFields() {
+        when(repository.findById(1L)).thenReturn(sampleEntity);
+        when(mapper.toDto(sampleEntity)).thenReturn(sampleDto);
+        CreateTableEntryDto partialDto = new CreateTableEntryDto(99, null, null);
+
+        service.patch(1L, partialDto);
+
+        assertEquals(99, sampleEntity.numberValue);
+        assertEquals("Option A", sampleEntity.selectorValue); // unchanged
+        assertEquals("Test text", sampleEntity.freeText); // unchanged
+    }
+
+    @Test
+    void patch_whenNotFound_throwsException() {
+        when(repository.findById(999L)).thenReturn(null);
+
+        assertThrows(EntryNotFoundException.class, () -> service.patch(999L, createDto));
     }
 
     @Test

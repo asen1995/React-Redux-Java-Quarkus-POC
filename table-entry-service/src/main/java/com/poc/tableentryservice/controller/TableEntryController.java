@@ -74,16 +74,29 @@ public class TableEntryController {
     }
 
     /**
-     * Updates an existing table entry.
+     * Replaces an existing table entry entirely.
      *
-     * @param id  the ID of the entry to update
-     * @param dto the new entry data
-     * @return the updated entry, or 404 Not Found if not exists
+     * @param id  the ID of the entry to replace
+     * @param dto the new entry data (all fields required)
+     * @return the replaced entry, or 404 Not Found if not exists
      */
     @PUT
     @Path("/{id}")
-    public TableEntryDto update(@RestPath Long id, CreateTableEntryDto dto) {
-        return service.update(id, dto);
+    public TableEntryDto replace(@RestPath Long id, CreateTableEntryDto dto) {
+        return service.replace(id, dto);
+    }
+
+    /**
+     * Partially updates an existing table entry.
+     *
+     * @param id  the ID of the entry to update
+     * @param dto the fields to update (null fields are ignored)
+     * @return the updated entry, or 404 Not Found if not exists
+     */
+    @PATCH
+    @Path("/{id}")
+    public TableEntryDto patch(@RestPath Long id, CreateTableEntryDto dto) {
+        return service.patch(id, dto);
     }
 
     /**
