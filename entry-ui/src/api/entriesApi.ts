@@ -1,6 +1,6 @@
 import type { TableEntry, CreateTableEntry, PagedResponse } from '../types/TableEntry';
 
-const API_URL = 'http://localhost:8080/api/entries';
+const API_URL = import.meta.env.VITE_API_URL || '/api/entries';
 
 export const entriesApi = {
   async getAll(

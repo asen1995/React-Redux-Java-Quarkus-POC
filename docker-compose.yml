@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: ./table-entry-service
+      dockerfile: Dockerfile
+    container_name: table-entry-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - QUARKUS_DATASOURCE_JDBC_URL=jdbc:h2:mem:tableentrydb;DB_CLOSE_DELAY=-1
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/api/entries"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build:
+      context: ./entry-ui
+      dockerfile: Dockerfile
+    container_name: table-entry-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      backend:
+        condition: service_healthy
