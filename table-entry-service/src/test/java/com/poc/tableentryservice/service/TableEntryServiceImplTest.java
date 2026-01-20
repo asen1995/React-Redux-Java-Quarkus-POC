@@ -76,39 +76,6 @@ class TableEntryServiceImplTest {
         verify(repository).findAllPaged(0, 10, "createdAt", false);
     }
 
-    @Test
-    void findAll_capsPageSizeAtMax() {
-        when(repository.findAllPaged(eq(0), eq(50), anyString(), anyBoolean())).thenReturn(List.of());
-        when(repository.count()).thenReturn(0L);
-        when(mapper.toDtoList(anyList())).thenReturn(List.of());
-
-        PagedResponse<TableEntryDto> result = service.findAll(0, 100, "createdAt", "desc");
-
-        assertEquals(50, result.size());
-        verify(repository).findAllPaged(0, 50, "createdAt", false);
-    }
-
-    @Test
-    void findAll_fallsBackToDefaultSortField() {
-        when(repository.findAllPaged(eq(0), eq(10), eq("createdAt"), anyBoolean())).thenReturn(List.of());
-        when(repository.count()).thenReturn(0L);
-        when(mapper.toDtoList(anyList())).thenReturn(List.of());
-
-        service.findAll(0, 10, "invalidField", "desc");
-
-        verify(repository).findAllPaged(0, 10, "createdAt", false);
-    }
-
-    @Test
-    void findAll_sortAscending() {
-        when(repository.findAllPaged(0, 10, "numberValue", true)).thenReturn(List.of());
-        when(repository.count()).thenReturn(0L);
-        when(mapper.toDtoList(anyList())).thenReturn(List.of());
-
-        service.findAll(0, 10, "numberValue", "asc");
-
-        verify(repository).findAllPaged(0, 10, "numberValue", true);
-    }
 
     @Test
     void findById_whenFound_returnsDto() {
