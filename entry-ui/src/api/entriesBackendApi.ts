@@ -2,7 +2,7 @@ import type { TableEntry, CreateTableEntry, PagedResponse } from '../types/Table
 
 const API_URL = import.meta.env.VITE_API_URL || '/api/entries';
 
-export const entriesApi = {
+export const entriesBackendApi = {
   async getAll(
     page = 0,
     size = 10,
