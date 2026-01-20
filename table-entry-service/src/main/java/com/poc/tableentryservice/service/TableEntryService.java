@@ -1,6 +1,7 @@
 package com.poc.tableentryservice.service;
 
 import com.poc.tableentryservice.dto.CreateTableEntryDto;
+import com.poc.tableentryservice.dto.PagedResponse;
 import com.poc.tableentryservice.dto.TableEntryDto;
 import com.poc.tableentryservice.entity.TableEntry;
 import com.poc.tableentryservice.mapper.TableEntryMapper;
@@ -8,7 +9,6 @@ import com.poc.tableentryservice.repository.TableEntryRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -32,13 +32,28 @@ public class TableEntryService {
         this.mapper = mapper;
     }
 
+    private static final int MAX_PAGE_SIZE = 50;
+    private static final String DEFAULT_SORT_BY = "createdAt";
+    private static final java.util.Set<String> ALLOWED_SORT_FIELDS = java.util.Set.of(
+            "createdAt", "numberValue", "selectorValue", "freeText"
+    );
+
     /**
-     * Retrieves all table entries.
+     * Retrieves table entries with pagination and sorting.
      *
-     * @return list of all entries as DTOs
+     * @param page          the page number (0-indexed)
+     * @param size          the page size (max 50)
+     * @param sortBy        the field to sort by (default: createdAt)
+     * @param sortDirection the sort direction: "asc" or "desc" (default: desc)
+     * @return paginated response with entries
      */
-    public List<TableEntryDto> findAll() {
-        return mapper.toDtoList(repository.listAll());
+    public PagedResponse<TableEntryDto> findAll(int page, int size, String sortBy, String sortDirection) {
+        int pageSize = Math.min(size, MAX_PAGE_SIZE);
+        String sortField = ALLOWED_SORT_FIELDS.contains(sortBy) ? sortBy : DEFAULT_SORT_BY;
+        boolean ascending = "asc".equalsIgnoreCase(sortDirection);
+        var entries = repository.findAllPaged(page, pageSize, sortField, ascending);
+        long total = repository.count();
+        return PagedResponse.of(mapper.toDtoList(entries), page, pageSize, total);
     }
 
     /**

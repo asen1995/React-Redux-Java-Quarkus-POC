@@ -3,13 +3,13 @@ package com.poc.tableentryservice.controller;
 import com.poc.tableentryservice.aspect.Logged;
 import com.poc.tableentryservice.aspect.Timed;
 import com.poc.tableentryservice.dto.CreateTableEntryDto;
+import com.poc.tableentryservice.dto.PagedResponse;
 import com.poc.tableentryservice.dto.TableEntryDto;
 import com.poc.tableentryservice.service.TableEntryService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.jboss.resteasy.reactive.RestPath;
-
-import java.util.List;
+import org.jboss.resteasy.reactive.RestQuery;
 
 /**
  * REST controller for managing table entries.
@@ -32,13 +32,21 @@ public class TableEntryController {
     }
 
     /**
-     * Retrieves all table entries.
+     * Retrieves table entries with pagination and sorting.
      *
-     * @return list of all entries
+     * @param page          the page number (0-indexed, default 0)
+     * @param size          the page size (default 10, max 50)
+     * @param sortBy        the field to sort by (default: createdAt)
+     * @param sortDirection the sort direction: "asc" or "desc" (default: desc)
+     * @return paginated list of entries
      */
     @GET
-    public List<TableEntryDto> getAll() {
-        return service.findAll();
+    public PagedResponse<TableEntryDto> getAll(
+            @RestQuery @DefaultValue("0") int page,
+            @RestQuery @DefaultValue("10") int size,
+            @RestQuery @DefaultValue("createdAt") String sortBy,
+            @RestQuery @DefaultValue("desc") String sortDirection) {
+        return service.findAll(page, size, sortBy, sortDirection);
     }
 
     /**
