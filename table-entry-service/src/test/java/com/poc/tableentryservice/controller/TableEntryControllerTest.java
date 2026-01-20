@@ -1,4 +1,4 @@
-package com.poc.tableentryservice;
+package com.poc.tableentryservice.controller;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
@@ -7,8 +7,12 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
+/**
+ * Integration tests for {@link TableEntryController}.
+ * Tests the REST API endpoints with a running Quarkus application.
+ */
 @QuarkusTest
-class TableEntryResourceTest {
+class TableEntryControllerTest {
 
     @Test
     void testCreateAndGetEntries() {
@@ -24,12 +28,13 @@ class TableEntryResourceTest {
             .body("selectorValue", equalTo("Option A"))
             .body("freeText", equalTo("Test text"));
 
-        // Get all entries
+        // Get all entries (returns PagedResponse)
         given()
             .when()
             .get("/api/entries")
             .then()
             .statusCode(200)
-            .body("size()", greaterThan(0));
+            .body("content.size()", greaterThan(0))
+            .body("totalElements", greaterThan(0));
     }
 }

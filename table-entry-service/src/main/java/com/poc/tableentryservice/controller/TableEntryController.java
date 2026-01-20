@@ -53,14 +53,12 @@ public class TableEntryController {
      * Retrieves a table entry by its ID.
      *
      * @param id the entry ID
-     * @return 200 OK with the entry, or 404 Not Found
+     * @return the entry, or 404 Not Found if not exists
      */
     @GET
     @Path("/{id}")
-    public Response getById(@RestPath Long id) {
-        return service.findById(id)
-                .map(entry -> Response.ok(entry).build())
-                .orElse(Response.status(Response.Status.NOT_FOUND).build());
+    public TableEntryDto getById(@RestPath Long id) {
+        return service.findById(id);
     }
 
     /**
@@ -80,28 +78,24 @@ public class TableEntryController {
      *
      * @param id  the ID of the entry to update
      * @param dto the new entry data
-     * @return 200 OK with the updated entry, or 404 Not Found
+     * @return the updated entry, or 404 Not Found if not exists
      */
     @PUT
     @Path("/{id}")
-    public Response update(@RestPath Long id, CreateTableEntryDto dto) {
-        return service.update(id, dto)
-                .map(updated -> Response.ok(updated).build())
-                .orElse(Response.status(Response.Status.NOT_FOUND).build());
+    public TableEntryDto update(@RestPath Long id, CreateTableEntryDto dto) {
+        return service.update(id, dto);
     }
 
     /**
      * Deletes a table entry by its ID.
      *
      * @param id the ID of the entry to delete
-     * @return 204 No Content if deleted, or 404 Not Found
+     * @return 204 No Content if deleted, or 404 Not Found if not exists
      */
     @DELETE
     @Path("/{id}")
     public Response delete(@RestPath Long id) {
-        if (service.delete(id)) {
-            return Response.noContent().build();
-        }
-        return Response.status(Response.Status.NOT_FOUND).build();
+        service.delete(id);
+        return Response.noContent().build();
     }
 }
