@@ -13,5 +13,5 @@ import java.lang.annotation.Target;
 @InterceptorBinding
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Logged {
+public @interface LoggedAspect {
 }

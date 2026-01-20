@@ -1,7 +1,7 @@
 package com.poc.tableentryservice.controller;
 
-import com.poc.tableentryservice.aspect.Logged;
-import com.poc.tableentryservice.aspect.Timed;
+import com.poc.tableentryservice.aspect.LoggedAspect;
+import com.poc.tableentryservice.aspect.TimedAspect;
 import com.poc.tableentryservice.dto.CreateTableEntryDto;
 import com.poc.tableentryservice.dto.PagedResponse;
 import com.poc.tableentryservice.dto.TableEntryDto;
@@ -16,8 +16,8 @@ import org.jboss.resteasy.reactive.RestQuery;
  * Provides endpoints for CRUD operations on table entries.
  */
 @Path("/api/entries")
-@Logged
-@Timed
+@LoggedAspect
+@TimedAspect
 public class TableEntryController {
 
     private final TableEntryService service;
