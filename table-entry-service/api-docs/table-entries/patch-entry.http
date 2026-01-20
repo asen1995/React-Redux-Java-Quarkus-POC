@@ -1,0 +1,16 @@
+### Patch entry by ID (partial update - only provided fields are updated)
+PATCH {{baseUrl}}/api/entries/1
+Content-Type: application/json
+
+{
+  "numberValue": 42
+}
+
+### Patch entry - update multiple fields
+PATCH {{baseUrl}}/api/entries/1
+Content-Type: application/json
+
+{
+  "selectorValue": "New Option",
+  "freeText": "Updated text only"
+}

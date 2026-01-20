@@ -1,0 +1,9 @@
+### Replace entry by ID (full replace - all fields required)
+PUT {{baseUrl}}/api/entries/1
+Content-Type: application/json
+
+{
+  "numberValue": 99,
+  "selectorValue": "Replaced Option",
+  "freeText": "This entry has been fully replaced"
+}

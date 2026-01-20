@@ -1,7 +1,7 @@
 package com.poc.tableentryservice.controller;
 
-import com.poc.tableentryservice.aspect.Logged;
-import com.poc.tableentryservice.aspect.Timed;
+import com.poc.tableentryservice.aspect.LoggedAspect;
+import com.poc.tableentryservice.aspect.TimedAspect;
 import com.poc.tableentryservice.dto.CreateTableEntryDto;
 import com.poc.tableentryservice.dto.PagedResponse;
 import com.poc.tableentryservice.dto.TableEntryDto;
@@ -16,8 +16,8 @@ import org.jboss.resteasy.reactive.RestQuery;
  * Provides endpoints for CRUD operations on table entries.
  */
 @Path("/api/entries")
-@Logged
-@Timed
+@LoggedAspect
+@TimedAspect
 public class TableEntryController {
 
     private final TableEntryService service;
@@ -53,14 +53,12 @@ public class TableEntryController {
      * Retrieves a table entry by its ID.
      *
      * @param id the entry ID
-     * @return 200 OK with the entry, or 404 Not Found
+     * @return the entry, or 404 Not Found if not exists
      */
     @GET
     @Path("/{id}")
-    public Response getById(@RestPath Long id) {
-        return service.findById(id)
-                .map(entry -> Response.ok(entry).build())
-                .orElse(Response.status(Response.Status.NOT_FOUND).build());
+    public TableEntryDto getById(@RestPath Long id) {
+        return service.findById(id);
     }
 
     /**
@@ -76,32 +74,41 @@ public class TableEntryController {
     }
 
     /**
-     * Updates an existing table entry.
+     * Replaces an existing table entry entirely.
      *
-     * @param id  the ID of the entry to update
-     * @param dto the new entry data
-     * @return 200 OK with the updated entry, or 404 Not Found
+     * @param id  the ID of the entry to replace
+     * @param dto the new entry data (all fields required)
+     * @return the replaced entry, or 404 Not Found if not exists
      */
     @PUT
     @Path("/{id}")
-    public Response update(@RestPath Long id, CreateTableEntryDto dto) {
-        return service.update(id, dto)
-                .map(updated -> Response.ok(updated).build())
-                .orElse(Response.status(Response.Status.NOT_FOUND).build());
+    public TableEntryDto replace(@RestPath Long id, CreateTableEntryDto dto) {
+        return service.replace(id, dto);
+    }
+
+    /**
+     * Partially updates an existing table entry.
+     *
+     * @param id  the ID of the entry to update
+     * @param dto the fields to update (null fields are ignored)
+     * @return the updated entry, or 404 Not Found if not exists
+     */
+    @PATCH
+    @Path("/{id}")
+    public TableEntryDto patch(@RestPath Long id, CreateTableEntryDto dto) {
+        return service.patch(id, dto);
     }
 
     /**
      * Deletes a table entry by its ID.
      *
      * @param id the ID of the entry to delete
-     * @return 204 No Content if deleted, or 404 Not Found
+     * @return 204 No Content if deleted, or 404 Not Found if not exists
      */
     @DELETE
     @Path("/{id}")
     public Response delete(@RestPath Long id) {
-        if (service.delete(id)) {
-            return Response.noContent().build();
-        }
-        return Response.status(Response.Status.NOT_FOUND).build();
+        service.delete(id);
+        return Response.noContent().build();
     }
 }

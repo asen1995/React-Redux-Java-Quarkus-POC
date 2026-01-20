@@ -9,7 +9,7 @@ import org.jboss.logging.Logger;
 /**
  * Interceptor that measures and logs method execution time.
  */
-@Timed
+@TimedAspect
 @Interceptor
 @Priority(Interceptor.Priority.APPLICATION + 1)
 public class PerformanceInterceptor {

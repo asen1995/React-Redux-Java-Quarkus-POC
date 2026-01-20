@@ -25,4 +25,4 @@ quarkus:
     database:
       generation: drop-and-create
     log:
-      sql: true
+      sql: false

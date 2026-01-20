@@ -1,9 +1,0 @@
-### Update entry by ID (replace 1 with actual ID)
-PUT {{baseUrl}}/api/entries/1
-Content-Type: application/json
-
-{
-  "numberValue": 99,
-  "selectorValue": "Updated Option",
-  "freeText": "This entry has been updated"
-}

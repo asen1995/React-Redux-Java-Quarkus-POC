@@ -9,7 +9,7 @@ import org.jboss.logging.Logger;
 /**
  * Interceptor that logs method entry and exit.
  */
-@Logged
+@LoggedAspect
 @Interceptor
 @Priority(Interceptor.Priority.APPLICATION)
 public class LoggingInterceptor {

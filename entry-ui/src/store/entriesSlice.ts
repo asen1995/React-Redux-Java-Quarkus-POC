@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { TableEntry, CreateTableEntry } from '../types/TableEntry';
-import { entriesApi } from '../api/entriesApi';
+import { entriesBackendApi } from '../api/entriesBackendApi';
 
 export type SortDirection = 'asc' | 'desc';
 export type SortField = 'createdAt' | 'numberValue' | 'selectorValue' | 'freeText';
@@ -43,14 +43,14 @@ interface FetchParams {
 export const fetchEntries = createAsyncThunk(
   'entries/fetchAll',
   async ({ page = 0, size = 10, sortBy = 'createdAt', sortDirection = 'desc' }: FetchParams) => {
-    return entriesApi.getAll(page, size, sortBy, sortDirection);
+    return entriesBackendApi.getAll(page, size, sortBy, sortDirection);
   }
 );
 
 export const addEntry = createAsyncThunk(
   'entries/add',
   async (entry: CreateTableEntry, { dispatch, getState }) => {
-    const result = await entriesApi.create(entry);
+    const result = await entriesBackendApi.create(entry);
     const { size, sortBy, sortDirection } = (getState() as { entries: EntriesState }).entries;
     // Refresh the first page to show the new entry at the top
     dispatch(fetchEntries({ page: 0, size, sortBy, sortDirection }));
@@ -61,7 +61,7 @@ export const addEntry = createAsyncThunk(
 export const deleteEntry = createAsyncThunk(
   'entries/delete',
   async (id: number, { dispatch, getState }) => {
-    await entriesApi.delete(id);
+    await entriesBackendApi.delete(id);
     const { page, size, sortBy, sortDirection } = (getState() as { entries: EntriesState }).entries;
     // Refresh current page after delete
     dispatch(fetchEntries({ page, size, sortBy, sortDirection }));
